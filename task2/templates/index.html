@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Inventory Management System{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-3">Inventory Management System</h1>
+                <p class="lead mb-4">Efficiently manage your products, locations, and inventory movements with our modern web application.</p>
+                <div class="d-flex gap-3">
+                    <a href="{{ url_for('add_product') }}" class="btn btn-light btn-lg">
+                        <i class="bi bi-plus-circle"></i> Add Product
+                    </a>
+                    <a href="{{ url_for('add_movement') }}" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-arrow-left-right"></i> New Movement
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <i class="bi bi-boxes feature-icon text-white" style="font-size: 8rem;"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Quick Stats -->
+    <div class="row mb-5">
+        <div class="col-md-3">
+            <div class="stats-card">
+                <div class="stats-number">{{ product_count }}</div>
+                <div class="stats-label">Total Products</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card">
+                <div class="stats-number">{{ location_count }}</div>
+                <div class="stats-label">Locations</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card">
+                <div class="stats-number">{{ movement_count }}</div>
+                <div class="stats-label">Total Movements</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card">
+                <div class="stats-number">{{ active_locations }}</div>
+                <div class="stats-label">Active Locations</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="mb-4"><i class="bi bi-lightning"></i> Quick Actions</h2>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-box feature-icon"></i>
+                    <h5 class="card-title">Manage Products</h5>
+                    <p class="card-text">Add, edit, and view your product catalog.</p>
+                    <a href="{{ url_for('products') }}" class="btn btn-primary">
+                        <i class="bi bi-box"></i> View Products
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-geo-alt feature-icon"></i>
+                    <h5 class="card-title">Manage Locations</h5>
+                    <p class="card-text">Set up and manage your warehouse locations.</p>
+                    <a href="{{ url_for('locations') }}" class="btn btn-success">
+                        <i class="bi bi-geo-alt"></i> View Locations
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-arrow-left-right feature-icon"></i>
+                    <h5 class="card-title">Track Movements</h5>
+                    <p class="card-text">Record and monitor inventory movements.</p>
+                    <a href="{{ url_for('movements') }}" class="btn btn-warning">
+                        <i class="bi bi-arrow-left-right"></i> View Movements
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Balance Report Preview -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-bar-chart"></i> Inventory Balance Overview</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Get detailed insights into your inventory levels across all locations.</p>
+                    <a href="{{ url_for('balance_report') }}" class="btn btn-primary">
+                        <i class="bi bi-bar-chart"></i> View Full Report
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

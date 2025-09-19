@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Movements - Inventory Management System{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-arrow-left-right"></i> Product Movements</h1>
+        <a href="{{ url_for('add_movement') }}" class="btn btn-warning">
+            <i class="bi bi-plus-circle"></i> Add New Movement
+        </a>
+    </div>
+
+    {% if movements %}
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Movement ID</th>
+                            <th>Date & Time</th>
+                            <th>Product</th>
+                            <th>From Location</th>
+                            <th>To Location</th>
+                            <th>Quantity</th>
+                            <th>Notes</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for movement in movements %}
+                        <tr>
+                            <td><strong>{{ movement.movement_id }}</strong></td>
+                            <td>{{ movement.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>
+                                <a href="{{ url_for('view_product', product_id=movement.product_id) }}" class="text-decoration-none">
+                                    {{ movement.product_id }}
+                                </a>
+                            </td>
+                            <td>
+                                {% if movement.from_location %}
+                                    <span class="badge bg-danger">
+                                        <i class="bi bi-box-arrow-right"></i> {{ movement.from_location }}
+                                    </span>
+                                {% else %}
+                                    <span class="text-muted">External</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if movement.to_location %}
+                                    <span class="badge bg-success">
+                                        <i class="bi bi-box-arrow-in-right"></i> {{ movement.to_location }}
+                                    </span>
+                                {% else %}
+                                    <span class="text-muted">External</span>
+                                {% endif %}
+                            </td>
+                            <td><strong>{{ movement.qty }}</strong></td>
+                            <td>{{ movement.notes[:30] if movement.notes else '-' }}{% if movement.notes and movement.notes|length > 30 %}...{% endif %}</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a href="{{ url_for('view_movement', movement_id=movement.movement_id) }}" 
+                                       class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-eye"></i> View
+                                    </a>
+                                    <a href="{{ url_for('edit_movement', movement_id=movement.movement_id) }}" 
+                                       class="btn btn-sm btn-outline-warning">
+                                        <i class="bi bi-pencil"></i> Edit
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="card">
+        <div class="card-body text-center py-5">
+            <i class="bi bi-arrow-left-right" style="font-size: 4rem; color: #6c757d;"></i>
+            <h4 class="mt-3 text-muted">No Movements Found</h4>
+            <p class="text-muted">Start by recording your first inventory movement.</p>
+            <a href="{{ url_for('add_movement') }}" class="btn btn-warning">
+                <i class="bi bi-plus-circle"></i> Add First Movement
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
